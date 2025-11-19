@@ -253,7 +253,7 @@
     const phone = document.getElementById('phone').value.replace(/\D/g, '').slice(-10);
     if (phone.length === 10) {
       const message = encodeURIComponent(
-        `سلام ${customerName} عزیز 🌸\n\nفاکتور شما از Aquarius Accessories آماده شد!\n\nشماره فاکتور: ${invoiceNumber}\nمبلغ قابل پرداخت: ${format(finalTotal)} تومان\n\nلطفاً رسید پرداخت را به این شماره ارسال کنید:\n+98 912 557 4218\n\nبعد از تأیید، سفارش شما فوراً ارسال می‌شود 💕\n\ninstagram.com/aquariusaccs`
+        `Hi Dear ${customerName} 🌸\n\nYour Invoice from Aquarius Accessories is Ready!\n\nInvoice Number: ${invoiceNumber}\nTotal: ${format(finalTotal)} Toman\n\nPlease send your receipt to this Number:\n+98 912 557 4218\n\nfor confirmation and delivery. 💕\n\ninstagram.com/aquariusaccs`
       );
       window.open(`https://wa.me/98${phone}?text=${message}`, '_blank');
     }
