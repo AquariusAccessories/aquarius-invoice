@@ -8,33 +8,36 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    /* FORCE TAHOMA EVERYWHERE - 100% SAFE IN IRAN */
-    * { font-family: Tahoma, Arial, sans-serif !important; }
-    
-    body { 
-      background: linear-gradient(to bottom, #fdf2f8, #fce7f3); 
-      min-height: 100vh; margin: 0; padding: 1.5rem; 
-      display: flex; align-items: center; justify-content: center; 
+    /* BULLETPROOF FONT STACK - WORKS ON EVERY IRANIAN PHONE */
+    * { 
+      font-family: Tahoma, Verdana, "DejaVu Sans", sans-serif !important; 
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
-    .btn { 
-      background: #ec4899; color: white; font-weight: bold; 
-      padding: 1.8rem 4rem; font-size: 2.2rem; border-radius: 2rem; 
-      box-shadow: 0 20px 50px rgba(236,72,153,0.5); border: none; cursor: pointer; 
+   
+    body {
+      background: linear-gradient(to bottom, #fdf2f8, #fce7f3);
+      min-height: 100vh; margin: 0; padding: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn {
+      background: #ec4899; color: white; font-weight: bold;
+      padding: 1.8rem 4rem; font-size: 2.2rem; border-radius: 2rem;
+      box-shadow: 0 20px 50px rgba(236,72,153,0.5); border: none; cursor: pointer;
       transition: all 0.3s;
     }
     .btn:hover { background: #db2777; transform: translateY(-6px); }
-    
-    /* INPUTS - MOBILE FRIENDLY */
-    input { 
-      border: 3px solid #f8b4d9; border-radius: 1.4rem; 
-      padding: 1.6rem 2rem; font-size: 1.3rem; width: 100%; 
+   
+    input {
+      border: 3px solid #f8b4d9; border-radius: 1.4rem;
+      padding: 1.6rem 2rem; font-size: 1.3rem; width: 100%;
       box-sizing: border-box; background: white; margin-bottom: 1rem;
     }
     input:focus { outline: none; border-color: #ec4899; box-shadow: 0 0 0 6px rgba(236,72,153,0.3); }
-    
-    .remove-btn { 
-      background: #fee2e2; color: #991b1b; width: 40px; height: 40px; 
-      border-radius: 50%; border: none; font-size: 1.5rem; cursor: pointer; 
+   
+    .remove-btn {
+      background: #fee2e2; color: #991b1b; width: 40px; height: 40px;
+      border-radius: 50%; border: none; font-size: 1.5rem; cursor: pointer;
     }
     .remove-btn:hover { background: #fecaca; }
   </style>
@@ -44,13 +47,13 @@
   New Invoice
 </button>
 
-<!-- HIDDEN INVOICE - NOW WITH TAHOMA & MOBILE SAFE -->
+<!-- HIDDEN INVOICE - BULLETPROOF FONTS -->
 <div id="print-area" class="hidden">
-  <div style="width:210mm; min-height:297mm; padding:20mm; background:white; font-family:Tahoma,Arial,sans-serif !important; font-size:14px; direction:ltr;">
+  <div style="width:210mm; min-height:297mm; padding:20mm; background:white; font-family:Tahoma,Verdana,'DejaVu Sans',sans-serif !important; font-size:14px; direction:ltr;">
     <div style="text-align:center; margin-bottom:30px;">
-      <h1 style="font-size:48px; color:#ec4899; margin:0; font-family:Tahoma,Arial,sans-serif !important;">Aquarius</h1>
-      <p style="font-size:28px; color:#ec4899; margin:10px 0; font-family:Tahoma,Arial,sans-serif !important;">Accessories</p>
-      <p style="font-size:20px; color:#666; font-family:Tahoma,Arial,sans-serif !important;">Official Invoice</p>
+      <h1 style="font-size:48px; color:#ec4899; margin:0;">Aquarius</h1>
+      <p style="font-size:28px; color:#ec4899; margin:10px 0;">Accessories</p>
+      <p style="font-size:20px; color:#666;">Official Invoice</p>
     </div>
     <div style="margin-bottom:30px; line-height:2;">
       <div><strong>Customer:</strong> <span id="p-name">Customer</span></div>
@@ -95,7 +98,7 @@
   </div>
 </div>
 
-<!-- MOBILE-FIXED MODAL -->
+<!-- MOBILE MODAL -->
 <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 overflow-y-auto">
   <div class="bg-white rounded-3xl shadow-3xl w-full max-w-4xl mx-4 my-8 overflow-y-auto max-h-screen">
     <div class="p-6 pb-8">
@@ -103,15 +106,13 @@
         <h1 class="text-6xl font-bold text-pink-600">Aquarius</h1>
         <p class="text-3xl text-pink-600 opacity-90">Accessories</p>
       </div>
-      
-      <!-- Customer Info - Mobile Stacked -->
+     
       <div class="space-y-4 mb-8">
         <input id="name" placeholder="Customer Name">
         <input id="phone" placeholder="Phone Number">
         <input id="address" placeholder="Shipping Address">
       </div>
-      
-      <!-- Items Table -->
+     
       <div class="border-4 border-pink-300 rounded-2xl overflow-hidden mb-8">
         <table class="w-full text-sm">
           <thead class="bg-pink-600 text-white">
@@ -139,8 +140,7 @@
           <button onclick="addRow()" class="text-pink-600 font-bold">+ Add Item</button>
         </div>
       </div>
-      
-      <!-- Totals Section - Mobile Friendly -->
+     
       <div class="space-y-6">
         <div>
           <label class="block text-pink-600 font-bold mb-2">Discount (15% or 50000)</label>
@@ -152,7 +152,7 @@
           <div class="text-5xl font-bold text-pink-600">Total: <span id="finalTotal">0</span> Toman</div>
         </div>
       </div>
-      
+     
       <div class="text-center mt-10">
         <button onclick="generatePDF()" class="btn text-4xl px-20 py-8">
           Generate PDF Invoice
@@ -164,6 +164,8 @@
 
 <script>
   let subtotal = 0, discount = 0, finalTotal = 0;
+  let invoiceNumber = '';  // Store invoice number
+
   function addRow() {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><input class="w-full p-2 text-center text-xs" placeholder="Item"></td>
@@ -176,7 +178,9 @@
     tr.querySelectorAll('input').forEach(i => i.oninput = calc);
     tr.querySelector('.remove-btn').onclick = () => { tr.remove(); calc(); };
   }
+
   function format(n) { return Math.round(n).toLocaleString('en-US'); }
+
   function calc() {
     subtotal = 0;
     document.querySelectorAll('#items tr').forEach(r => {
@@ -193,15 +197,19 @@
     document.getElementById('discAmt').textContent = format(discount);
     document.getElementById('finalTotal').textContent = format(finalTotal);
   }
+
   document.getElementById('items').addEventListener('input', calc);
   document.getElementById('discount').addEventListener('input', calc);
 
   async function generatePDF() {
-    document.getElementById('p-name').textContent = document.getElementById('name').value || 'Customer';
+    const customerName = document.getElementById('name').value.trim() || 'Customer';
+    invoiceNumber = 'AQ' + Date.now().toString().slice(-8);
+
+    document.getElementById('p-name').textContent = customerName;
     document.getElementById('p-phone').textContent = document.getElementById('phone').value || '-';
     document.getElementById('p-address').textContent = document.getElementById('address').value || '-';
     document.getElementById('p-date').textContent = new Date().toLocaleDateString('en-GB');
-    document.getElementById('p-id').textContent = 'AQ' + Date.now().toString().slice(-8);
+    document.getElementById('p-id').textContent = invoiceNumber;
     document.getElementById('p-sub').textContent = format(subtotal);
     document.getElementById('p-disc').textContent = format(discount);
     document.getElementById('p-total').textContent = format(finalTotal);
@@ -224,10 +232,10 @@
     });
 
     document.getElementById('print-area').style.display = 'block';
-    await new Promise(r => setTimeout(r, 150));
+    await new Promise(r => setTimeout(r, 200));
 
     const canvas = await html2canvas(document.querySelector('#print-area > div'), {
-      scale: 2.4,
+      scale: 2.6,
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
@@ -241,11 +249,16 @@
 
     document.getElementById('print-area').style.display = 'none';
 
-    const phone = document.getElementById('phone').value.replace(/\D/g, '');
-    if (phone.length >= 10) {
-      window.open(`https://wa.me/98${phone}?text=Hi Dear ${name}! Here is your Invoice from Aquarius Accessories`, '_blank');
+    // PERFECT WHATSAPP MESSAGE
+    const phone = document.getElementById('phone').value.replace(/\D/g, '').slice(-10);
+    if (phone.length === 10) {
+      const message = encodeURIComponent(
+        `سلام ${customerName} عزیز 🌸\n\nفاکتور شما از Aquarius Accessories آماده شد!\n\nشماره فاکتور: ${invoiceNumber}\nمبلغ قابل پرداخت: ${format(finalTotal)} تومان\n\nلطفاً رسید پرداخت را به این شماره ارسال کنید:\n+98 912 557 4218\n\nبعد از تأیید، سفارش شما فوراً ارسال می‌شود 💕\n\ninstagram.com/aquariusaccs`
+      );
+      window.open(`https://wa.me/98${phone}?text=${message}`, '_blank');
     }
   }
+
   calc();
 </script>
 </body>
