@@ -8,12 +8,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; background: linear-gradient(to bottom, #fdf2f8, #fce7f3); min-height: 100vh; margin: 0; padding: 2rem; display: flex; align-items: center; justify-content: center; }
-    .btn { background: #ec4899; color: white; font-weight: bold; padding: 2rem 5rem; font-size: 2.5rem; border-radius: 2rem; box-shadow: 0 20px 50px rgba(236,72,153,0.5); border: none; cursor: pointer; }
-    .btn:hover { background: #db2777; transform: translateY(-8px); }
-    input { border: 3px solid #f8b4d9; border-radius: 1.4rem; padding: 1.8rem 2.4rem; font-size: 1.4rem; width: 100%; box-sizing: border-box; background: white; }
+    /* FORCE TAHOMA EVERYWHERE - 100% SAFE IN IRAN */
+    * { font-family: Tahoma, Arial, sans-serif !important; }
+    
+    body { 
+      background: linear-gradient(to bottom, #fdf2f8, #fce7f3); 
+      min-height: 100vh; margin: 0; padding: 1.5rem; 
+      display: flex; align-items: center; justify-content: center; 
+    }
+    .btn { 
+      background: #ec4899; color: white; font-weight: bold; 
+      padding: 1.8rem 4rem; font-size: 2.2rem; border-radius: 2rem; 
+      box-shadow: 0 20px 50px rgba(236,72,153,0.5); border: none; cursor: pointer; 
+      transition: all 0.3s;
+    }
+    .btn:hover { background: #db2777; transform: translateY(-6px); }
+    
+    /* INPUTS - MOBILE FRIENDLY */
+    input { 
+      border: 3px solid #f8b4d9; border-radius: 1.4rem; 
+      padding: 1.6rem 2rem; font-size: 1.3rem; width: 100%; 
+      box-sizing: border-box; background: white; margin-bottom: 1rem;
+    }
     input:focus { outline: none; border-color: #ec4899; box-shadow: 0 0 0 6px rgba(236,72,153,0.3); }
-    .remove-btn { background: #fee2e2; color: #991b1b; width: 44px; height: 44px; border-radius: 50%; border: none; font-size: 1.6rem; cursor: pointer; margin: 0 auto; display: block; }
+    
+    .remove-btn { 
+      background: #fee2e2; color: #991b1b; width: 40px; height: 40px; 
+      border-radius: 50%; border: none; font-size: 1.5rem; cursor: pointer; 
+    }
     .remove-btn:hover { background: #fecaca; }
   </style>
 </head>
@@ -21,13 +43,14 @@
 <button onclick="document.getElementById('modal').classList.remove('hidden')" class="btn">
   New Invoice
 </button>
-<!-- HIDDEN PERFECT INVOICE - 100% ENGLISH + NO GRADIENTS -->
+
+<!-- HIDDEN INVOICE - NOW WITH TAHOMA & MOBILE SAFE -->
 <div id="print-area" class="hidden">
-  <div style="width:210mm; min-height:297mm; padding:20mm; background:white; font-family:Arial,sans-serif; font-size:14px; direction:ltr;">
+  <div style="width:210mm; min-height:297mm; padding:20mm; background:white; font-family:Tahoma,Arial,sans-serif !important; font-size:14px; direction:ltr;">
     <div style="text-align:center; margin-bottom:30px;">
-      <h1 style="font-size:48px; color:#ec4899; margin:0;">Aquarius</h1>
-      <p style="font-size:28px; color:#ec4899; margin:10px 0;">Accessories</p>
-      <p style="font-size:20px; color:#666;">Official Invoice</p>
+      <h1 style="font-size:48px; color:#ec4899; margin:0; font-family:Tahoma,Arial,sans-serif !important;">Aquarius</h1>
+      <p style="font-size:28px; color:#ec4899; margin:10px 0; font-family:Tahoma,Arial,sans-serif !important;">Accessories</p>
+      <p style="font-size:20px; color:#666; font-family:Tahoma,Arial,sans-serif !important;">Official Invoice</p>
     </div>
     <div style="margin-bottom:30px; line-height:2;">
       <div><strong>Customer:</strong> <span id="p-name">Customer</span></div>
@@ -71,73 +94,84 @@
     </div>
   </div>
 </div>
-<!-- Modal (your beautiful form) -->
-<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
-  <div class="bg-white rounded-3xl shadow-3xl w-full max-w-5xl max-h-screen overflow-y-auto p-10">
-    <div class="text-center mb-10">
-      <h1 class="text-7xl font-bold text-pink-600">Aquarius</h1>
-      <p class="text-4xl text-pink-600 opacity-90">Accessories</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-      <input id="name" placeholder="Customer Name">
-      <input id="phone" placeholder="Phone Number">
-      <input id="address" placeholder="Shipping Address">
-    </div>
-    <div class="border-4 border-pink-300 rounded-2xl overflow-hidden mb-10">
-      <table class="w-full">
-        <thead class="bg-pink-600 text-white">
-          <tr>
-            <th class="p-4">Item</th>
-            <th class="p-4">Description</th>
-            <th class="p-4 w-24">Qty</th>
-            <th class="p-4 w-32">Price</th>
-            <th class="p-4 w-32">Total</th>
-            <th class="p-4 w-20"></th>
-          </tr>
-        </thead>
-        <tbody id="items">
-          <tr>
-            <td><input class="w-full p-3 text-center" placeholder="Diamond Earrings"></td>
-            <td><input class="w-full p-3 text-center" placeholder="Rose Gold"></td>
-            <td><input type="number" min="1" value="1" class="qty w-full p-3 text-center"></td>
-            <td><input type="number" class="price w-full p-3 text-center" placeholder="450000"></td>
-            <td class="total font-bold text-pink-600 text-center p-3">0</td>
-            <td><button class="remove-btn">×</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="p-6 text-center">
-        <button onclick="addRow()" class="text-pink-600 font-bold text-xl">+ Add Item</button>
+
+<!-- MOBILE-FIXED MODAL -->
+<div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 overflow-y-auto">
+  <div class="bg-white rounded-3xl shadow-3xl w-full max-w-4xl mx-4 my-8 overflow-y-auto max-h-screen">
+    <div class="p-6 pb-8">
+      <div class="text-center mb-8">
+        <h1 class="text-6xl font-bold text-pink-600">Aquarius</h1>
+        <p class="text-3xl text-pink-600 opacity-90">Accessories</p>
       </div>
-    </div>
-    <div class="flex flex-col lg:flex-row justify-between items-end gap-10">
-      <div>
-        <label class="block text-pink-600 font-bold text-xl mb-3">Discount (15% or 50000)</label>
-        <input id="discount" class="w-96 text-2xl p-6 rounded-2xl border-4 border-pink-300">
+      
+      <!-- Customer Info - Mobile Stacked -->
+      <div class="space-y-4 mb-8">
+        <input id="name" placeholder="Customer Name">
+        <input id="phone" placeholder="Phone Number">
+        <input id="address" placeholder="Shipping Address">
       </div>
-      <div class="text-right">
-        <div class="text-3xl">Subtotal: <span id="subtotal" class="text-5xl font-bold text-pink-600">0</span> Toman</div>
-        <div class="text-3xl text-pink-600">Discount: <span id="discAmt" class="text-5xl font-bold">0</span> Toman</div>
-        <div class="text-7xl font-bold text-pink-600">Total: <span id="finalTotal">0</span> Toman</div>
+      
+      <!-- Items Table -->
+      <div class="border-4 border-pink-300 rounded-2xl overflow-hidden mb-8">
+        <table class="w-full text-sm">
+          <thead class="bg-pink-600 text-white">
+            <tr>
+              <th class="p-3">Item</th>
+              <th class="p-3">Desc</th>
+              <th class="p-3">Qty</th>
+              <th class="p-3">Price</th>
+              <th class="p-3">Total</th>
+              <th class="p-3"></th>
+            </tr>
+          </thead>
+          <tbody id="items">
+            <tr>
+              <td><input class="w-full p-2 text-center text-xs" placeholder="Item"></td>
+              <td><input class="w-full p-2 text-center text-xs" placeholder="Details"></td>
+              <td><input type="number" min="1" value="1" class="qty w-full p-2 text-center text-xs"></td>
+              <td><input type="number" class="price w-full p-2 text-center text-xs" placeholder="0"></td>
+              <td class="total font-bold text-pink-600 text-center p-2 text-xs">0</td>
+              <td><button class="remove-btn text-lg">×</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="p-4 text-center bg-pink-50">
+          <button onclick="addRow()" class="text-pink-600 font-bold">+ Add Item</button>
+        </div>
       </div>
-    </div>
-    <div class="text-center mt-16">
-      <button onclick="generatePDF()" class="btn text-5xl px-32 py-10">
-        Generate PDF Invoice
-      </button>
+      
+      <!-- Totals Section - Mobile Friendly -->
+      <div class="space-y-6">
+        <div>
+          <label class="block text-pink-600 font-bold mb-2">Discount (15% or 50000)</label>
+          <input id="discount" class="text-xl p-4 rounded-2xl border-4 border-pink-300 w-full">
+        </div>
+        <div class="text-right space-y-2">
+          <div class="text-2xl">Subtotal: <span id="subtotal" class="text-4xl font-bold text-pink-600">0</span> Toman</div>
+          <div class="text-2xl text-pink-600">Discount: <span id="discAmt" class="text-4xl font-bold">0</span> Toman</div>
+          <div class="text-5xl font-bold text-pink-600">Total: <span id="finalTotal">0</span> Toman</div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-10">
+        <button onclick="generatePDF()" class="btn text-4xl px-20 py-8">
+          Generate PDF Invoice
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
 <script>
   let subtotal = 0, discount = 0, finalTotal = 0;
   function addRow() {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td><input class="w-full p-3 text-center" placeholder="Item"></td>
-      <td><input class="w-full p-3 text-center" placeholder="Details"></td>
-      <td><input type="number" min="1" value="1" class="qty w-full p-3 text-center"></td>
-      <td><input type="number" class="price w-full p-3 text-center" placeholder="0"></td>
-      <td class="total font-bold text-pink-600 text-center p-3">0</td>
-      <td><button class="remove-btn">×</button></td>`;
+    tr.innerHTML = `<td><input class="w-full p-2 text-center text-xs" placeholder="Item"></td>
+      <td><input class="w-full p-2 text-center text-xs" placeholder="Details"></td>
+      <td><input type="number" min="1" value="1" class="qty w-full p-2 text-center text-xs"></td>
+      <td><input type="number" class="price w-full p-2 text-center text-xs" placeholder="0"></td>
+      <td class="total font-bold text-pink-600 text-center p-2 text-xs">0</td>
+      <td><button class="remove-btn text-lg">×</button></td>`;
     document.getElementById('items').appendChild(tr);
     tr.querySelectorAll('input').forEach(i => i.oninput = calc);
     tr.querySelector('.remove-btn').onclick = () => { tr.remove(); calc(); };
@@ -161,8 +195,8 @@
   }
   document.getElementById('items').addEventListener('input', calc);
   document.getElementById('discount').addEventListener('input', calc);
+
   async function generatePDF() {
-    // Fill hidden perfect invoice
     document.getElementById('p-name').textContent = document.getElementById('name').value || 'Customer';
     document.getElementById('p-phone').textContent = document.getElementById('phone').value || '-';
     document.getElementById('p-address').textContent = document.getElementById('address').value || '-';
@@ -171,6 +205,7 @@
     document.getElementById('p-sub').textContent = format(subtotal);
     document.getElementById('p-disc').textContent = format(discount);
     document.getElementById('p-total').textContent = format(finalTotal);
+
     const tbody = document.getElementById('p-items');
     tbody.innerHTML = '';
     document.querySelectorAll('#items tr').forEach(r => {
@@ -187,25 +222,28 @@
         <td style="padding:12px; border-bottom:1px solid #eee; text-align:right; font-weight:bold; color:#ec4899;">${format(total)}</td>`;
       tbody.appendChild(tr);
     });
-    // THE MAGIC FIX: Force reflow before canvas
+
     document.getElementById('print-area').style.display = 'block';
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise(r => setTimeout(r, 150));
+
     const canvas = await html2canvas(document.querySelector('#print-area > div'), {
-      scale: 2,
+      scale: 2.4,
       useCORS: true,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      logging: false
     });
+
     const img = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
     pdf.addImage(img, 'PNG', 0, 0, 210, 297);
     pdf.save('Aquarius_Invoice.pdf');
-    // Hide again
+
     document.getElementById('print-area').style.display = 'none';
-    // WhatsApp
+
     const phone = document.getElementById('phone').value.replace(/\D/g, '');
     if (phone.length >= 10) {
-      window.open(`https://wa.me/98${phone}?text=Hi! Your Aquarius invoice is ready`, '_blank');
+      window.open(`https://wa.me/98${phone}?text=سلام! فاکتور آکواریوس شما آماده است`, '_blank');
     }
   }
   calc();
