@@ -245,7 +245,7 @@
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
     pdf.addImage(img, 'PNG', 0, 0, 210, 297);
-    pdf.save('Aquarius_Invoice.pdf');
+    pdf.save(`Aquarius_Invoice_${customerName}_${invoiceNumber}.pdf`);
 
     document.getElementById('print-area').style.display = 'none';
 
